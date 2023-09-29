@@ -169,7 +169,7 @@ public class ComputerStore {
 			}
 		}
 	}
-
+	//function to find computers whose price is less than given price
 	public static void findCheaperThan(Double CheapPrice, Computer[] inventory) {
 		for (int i = 0; i < Computer.findNumberOfCreatedComputers(); i++) {
 			if (inventory[i].getPrice() <= CheapPrice) {
