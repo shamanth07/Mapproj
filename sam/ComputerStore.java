@@ -147,16 +147,16 @@ public class ComputerStore {
 
 	}
 
-	public static boolean verifyPswd(String ParP) {
+	public static boolean verifyPswd(String pswd) {
 		Scanner kb = new Scanner(System.in);
 		int loopCount = 1;
 		final String password = "password";
-		while (!ParP.equals(password) && loopCount < 3) {
+		while (!pswd.equals(password) && loopCount < 3) {
 			System.out.println("Enter the password: ");
-			ParP = kb.next();
+			pswd = kb.next();
 			loopCount++;
 		}
-		if (loopCount <= 3 && ParP.equals(password)) {
+		if (loopCount <= 3 && pswd.equals(password)) {
 			return true;
 		} else
 			return false;
