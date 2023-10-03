@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class ComputerStore {
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		System.out.println("Welcome to Computer Store!! ");
+		System.out.println(" Welcome to the store ");
 		int maxComp = 0;
 		do {
-			System.out.println("Enter the maximum of computers that computer store can contain : ");
+			System.out.println("Please enter the number of computers to store : ");
 			maxComp = kb.nextInt();
 			if (maxComp <= 0)
-				System.out.println("Invalid, the inventory should be positive");
+				System.out.println("Please enter a positive number");
 		} while (maxComp <= 0);
 		// creation of inventory array of max computer size
 		Computer[] inventory = new Computer[maxComp];
@@ -28,18 +28,20 @@ public class ComputerStore {
 			String brand;
 			double price;
 			int compcount;
+			int addedComputers = Computer.findNumberOfCreatedComputers();
 			switch (mainMenu) {
 			case 1:
+				double prz=0;
 				System.out.println("Enter the password: ");
 				pswd = kb.next();
 				if (verifyPswd(pswd) == false) {
 					break;
 				}
 				do {
-					System.out.println("How many computers you want to enter : ");
+					System.out.println("Enter number of computers : ");
 					compcount = kb.nextInt();
 					if (compcount <= 0) {
-						System.out.println("Invalid value");
+						System.out.println("Enter positive integer");
 					}
 				} while (compcount <= 0 || compcount > maxComp);
 				for (int i = 0; i < compcount; i++) {
@@ -47,13 +49,16 @@ public class ComputerStore {
 					String brnd = kb.next();
 					System.out.println("Enter Model:");
 					String mdl = kb.next();
+					do {
 					System.out.println("Enter price:");
-					double prz = kb.nextDouble();
-					inventory[i] = new Computer();
-					inventory[i].setBrand(brnd);
-					inventory[i].setModel(mdl);
-					inventory[i].setPrice(prz);
-					Computer.displayComputer(inventory[i]);
+					prz = kb.nextDouble();
+					if (prz <= 0) {
+						System.out.println("Please enter a positive number");
+					}
+					}
+					while (prz <= 0);
+					inventory[addedComputers+i] = new Computer(brnd, mdl, prz);
+					Computer.displayComputer(inventory[addedComputers+i]);
 				}
 				break;
 			case 2:
@@ -67,20 +72,24 @@ public class ComputerStore {
 				int computerNum = 0;
 				do {
 				System.out.println("Enter the computer number: ");
-				computerNum = kb.nextInt() - 1;
-				if (computerNum <= Computer.findNumberOfCreatedComputers() && computerNum >= 0) {
-					System.out.println("Brand" + inventory[computerNum].getBrand());
-					System.out.println("Model" + inventory[computerNum].getModel());
-					System.out.println("Price" + inventory[computerNum].getPrice());
-					System.out.println("Serial Number" + inventory[computerNum].getSN());
+				computerNum = kb.nextInt();
+				
+				}while(computerNum > Computer.findNumberOfCreatedComputers() || computerNum <= 0);
+				computerNum--;	
+				Computer.displayComputer(inventory[computerNum]);
+				if (computerNum < Computer.findNumberOfCreatedComputers() && computerNum >= 0) {
+					System.out.println("Brand: " + inventory[computerNum].getBrand());
+					System.out.println("Model: " + inventory[computerNum].getModel());
+					System.out.println("Price: " + inventory[computerNum].getPrice());
+					System.out.println("Serial Number: " + inventory[computerNum].getSN());
 				do {
 					System.out.println("What information would you like to change?\n"
-							+ "1.	brand\r\n"
-							+ "2.	model\r\n"
-							+ "3.	SN\r\n"
-							+ "4.	price\r\n"
-							+ "5.	Quit\r\n"
-							+ "Enter your choice >\r\n");
+							+ "1.	brand\n"
+							+ "2.	model\n"
+							+ "3.	price\n"
+							+ "4.	Sn\n"
+							+ "5.	Quit\n"
+							+ "Enter your choice >\n");
 					choice = kb.nextInt();
 					switch(choice) {
 				    case 1: 
@@ -96,14 +105,30 @@ public class ComputerStore {
 				    	Computer.displayComputer(inventory[computerNum]);
 				    	break;
 				    case 3:
-				    	System.out.println("Update Price");
-				    	double prize = kb.nextInt();
+				    	
+				    	double prize = 0;
+				    	do {
+							System.out.println("Enter price:");
+							prize = kb.nextDouble();
+							if (prize <= 0) {
+								System.out.println("Please enter a positive number");
+							}
+							}
+							while (prize <= 0);
 				    	inventory[computerNum].setPrice(prize);
 				    	Computer.displayComputer(inventory[computerNum]);
 				    	break;
 				    case 4:
-				    	System.out.println("Update Serial Number");
-				    	int sn = kb.nextInt();
+				    
+				    	int sn = 0;
+				    	do {
+							System.out.println("Enter Sn:");
+							sn= kb.nextInt();
+							if (sn <= 0) {
+								System.out.println("Please enter a positive number");
+							}
+							}
+							while (sn <= 0);
 				    	inventory[computerNum].setSN(sn);
 				    	Computer.displayComputer(inventory[computerNum]);
 				    	break;
@@ -115,14 +140,7 @@ public class ComputerStore {
 						break;
 				} 
 				}while(choice != 5);
-				}
-				else {
-					System.out.println("Entered number is invalid");
-					System.out.println("1.Please enter another number: ");
-					System.out.println(" or 2.quit this operation and go back to main menu");
-					option = kb.nextInt();
-				}
-				}while(computerNum >= Computer.findNumberOfCreatedComputers() && computerNum <= 0);
+				//}
 				break;
 			case 3:
 				System.out.println("Enter brand name: ");
@@ -130,8 +148,16 @@ public class ComputerStore {
 				findComputersBy(brand, inventory);
 				break;
 			case 4:
-				System.out.println("Enter the price: $");
-				price = kb.nextDouble();
+	
+				price = 0;
+				do {
+					System.out.println("Enter price:");
+					price = kb.nextDouble();
+					if (price <= 0) {
+						System.out.println("Please enter a positive number");
+					}
+					}
+					while (price <= 0);
 				findCheaperThan(price, inventory);
 				break;
 			case 5:
