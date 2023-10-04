@@ -1,3 +1,5 @@
+
+// Description: This Java code represents a simple computer store management system. The program allows users to interact with the store by performing various actions such as adding new computers, modifying computer information, displaying computers by brand or price, and quitting the program. The code utilizes a Computer class to handle computer information and implements functionalities like password verification, managing inventory, and displaying computer details based on user input. The program runs in a loop until the user chooses to exit, enhancing the user experience in interacting with the virtual computer store.
 package sam;
 
 import java.util.Scanner;
@@ -44,7 +46,7 @@ public class ComputerStore {
 				if (verifyPswd(pswd) == false) {
 					break;
 				}
-				 // Loop to enter details for multiple computers
+				// Loop to enter details for multiple computers
 				do {
 					System.out.println("Enter number of computers : ");
 					compcount = kb.nextInt();
@@ -52,7 +54,7 @@ public class ComputerStore {
 						System.out.println("Enter positive integer");
 					}
 				} while (compcount <= 0 || compcount > maxComp);
-				 // Loop to enter details for each computer
+				// Loop to enter details for each computer
 				for (int i = 0; i < compcount; i++) {
 					System.out.println("Enter Brand:");
 					String brnd = kb.next();
@@ -181,6 +183,7 @@ public class ComputerStore {
 
 		kb.close();
 	}
+
 	// Function to verify the password
 	public static boolean verifyPswd(String pswd) {
 		Scanner kb = new Scanner(System.in);
